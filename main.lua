@@ -1,6 +1,10 @@
 require 'src/player'
+require 'src/robot'
 require 'src/game'
 require 'lib/misc'
+require 'src/container'
+require 'src/creator'
+require 'src/bullet'
 
 function love.load()
   nativeWindowWidth = 640
@@ -16,7 +20,10 @@ function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest', 1)
 
   images.player = love.graphics.newImage('assets/imgs/player.png')
-  cursor = love.graphics.newImage('assets/imgs/cursor.png')
+  images.head = love.graphics.newImage('assets/imgs/head.png')
+  images.particle = love.graphics.newImage('assets/imgs/particle-3.png')
+  images.robot = love.graphics.newImage('assets/imgs/enemies/robot.png')
+  images.bullet = love.graphics.newImage('assets/imgs/bullet.png')
 
   fonts = {}
   fonts.large = love.graphics.newFont('assets/fonts/zorque.ttf', 32)
@@ -24,13 +31,16 @@ function love.load()
   fonts.small = love.graphics.newFont('assets/fonts/zorque.ttf', 12)
 
   music = {}
-  music.main = love.audio.newSource('assets/music/theme-4.wav', 'stream')
+  music.main = love.audio.newSource('assets/music/theme-3.ogg', 'stream')
   music.main:setVolume(0.35)
   music.main:setLooping(true)
 
   music.menu = love.audio.newSource('assets/music/theme-4.wav', 'stream')
   music.menu:setVolume(0.35)
   music.menu:setLooping(true)
+
+  sounds = {}
+  sounds.gunshot = love.audio.newSource('assets/sounds/shoot-1.wav', 'static')
 
   moonshine = require 'lib/moonshine'
   shaders = moonshine(moonshine.effects.filmgrain).chain(moonshine.effects.vignette)
@@ -71,5 +81,5 @@ function love.draw()
     love.graphics.rectangle('fill', windowWidth - windowOffsetX, 0, windowOffsetX, windowHeight)
     love.graphics.rectangle('fill', 0, 0, windowWidth, windowOffsetY)
     love.graphics.rectangle('fill', 0, windowHeight - windowOffsetY, windowWidth, windowOffsetY)
-    love.graphics.draw(cursor, love.mouse.getX() - cursor:getWidth() / 2, love.mouse.getY() - cursor:getHeight() / 2)
+    love.graphics.setColor(255, 0, 0)
 end
