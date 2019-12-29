@@ -9,7 +9,7 @@ function Player:initialize()
     self.radius = 10
 
     self.angle = 0
-    self.energy = 10
+    self.amo = 9
 
     self.triggerReleased = false
     self.lastShotTime = 0
@@ -53,6 +53,20 @@ function Player:update(dt)
         local currentTime = love.timer.getTime()
     end
 
+    for i=1, #game.amoPacks.contents do
+      local amo = game.amoPacks.contents[i]
+      local amo_dx = amo.x - self.x
+      local amo_dy = amo.y - self.y
+      local d = math.sqrt(amo_dx^2 + amo_dy^2)
+
+      if d < self.radius + amo.radius then
+        if self.amo < 9 then
+          self.amo = 9
+          amo.to_delete = true
+        end
+      end
+    end
+
     for i=1, #game.robots.contents do
           local robot = game.robots.contents[i]
           local robot_dx = robot.x - self.x
@@ -60,15 +74,11 @@ function Player:update(dt)
           local d = math.sqrt(robot_dx^2 + robot_dy^2)
 
           if d < self.radius + robot.radius then
-            if self.energy == 0 then
               self.alive = false
-            else
-              self.energy = self.energy - 1
-            end
           end
       end
 
-      if love.keyboard.isDown('space', 'return') then
+      if love.keyboard.isDown('space', 'return') and self.amo > 0 then
         if self.triggerReleased and love.timer.getTime() - self.lastShotTime > 0.15 then
             local gun_x = self.x + 32 * math.cos(self.angle) - 10 * math.sin(self.angle)
             local gun_y = self.y + 32 * math.sin(self.angle) + 10 * math.cos(self.angle)
@@ -83,6 +93,7 @@ function Player:update(dt)
             local recoil = 2
             self.x = self.x - recoil * math.cos(self.angle)
             self.y = self.y - recoil * math.sin(self.angle)
+            self.amo = self.amo - 1;
         end
         self.triggerReleased = false
       else
@@ -92,6 +103,10 @@ end
 
 function Player:draw()
     love.graphics.setColor(255, 255, 255)
-
     love.graphics.draw(images.player, self.x, self.y, self.angle, 1, 1, 16, 22)
+    love.graphics.draw(images.amoCounter, nativeCanvasWidth/2 - 290, nativeCanvasHeight/2 - 150, 0, 1, 1, 16, 22)
+
+    for i=1, self.amo do
+        love.graphics.draw(images.amo, nativeCanvasWidth/2 - 284 + (i*6), nativeCanvasHeight/2 - 144, 0, 1, 1, 16, 22)
+    end
 end

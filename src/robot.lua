@@ -40,6 +40,10 @@ function Robot:update(dt)
     if self.hp <= 0 then
         game.score = game.score + 1
 
+        if math.random() < 0.8 then
+          game.amoPacks:add(AmoPack:new(self.x, self.y))
+        end
+
         self.to_delete = true
     end
 end

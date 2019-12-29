@@ -29,7 +29,7 @@ function Menu:draw()
 
     love.graphics.setFont(fonts.large)
     love.graphics.setColor(0, 0, 0)
-    love.graphics.printf('Up-Down Shooter', nativeCanvasWidth/2 - 500, nativeCanvasHeight/2 - 70, 1000, 'center')
+    love.graphics.printf('Top-Down Shooter', nativeCanvasWidth/2 - 500, nativeCanvasHeight/2 - 70, 1000, 'center')
 
     if math.floor(love.timer.getTime()) % 2 == 0 then
       love.graphics.setFont(fonts.medium)
@@ -46,6 +46,7 @@ function Play:enteredState()
     self.player = Player:new()
     self.bullets = Container:new()
     self.robots = Container:new()
+    self.amoPacks = Container:new()
     self.creator = Creator:new()
 
     self.score = 0
@@ -57,6 +58,7 @@ function Play:update(dt)
   self.player:update(dt)
   self.robots:update(dt)
   self.bullets:update(dt)
+  self.amoPacks:update(dt)
   self.creator:update(dt)
 
   if self.player.alive == false then
@@ -80,6 +82,7 @@ function Play:draw()
         end
     end
 
+    self.amoPacks:draw()
     self.player:draw()
     self.robots:draw()
     self.bullets:draw()

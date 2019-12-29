@@ -5,6 +5,7 @@ require 'lib/misc'
 require 'src/container'
 require 'src/creator'
 require 'src/bullet'
+require 'src/amoPack'
 
 function love.load()
   nativeWindowWidth = 640
@@ -24,6 +25,9 @@ function love.load()
   images.particle = love.graphics.newImage('assets/imgs/particle-3.png')
   images.robot = love.graphics.newImage('assets/imgs/enemies/robot.png')
   images.bullet = love.graphics.newImage('assets/imgs/bullet.png')
+  images.amoCounter = love.graphics.newImage('assets/imgs/amo-box.png')
+  images.amo = love.graphics.newImage('assets/imgs/amo.png')
+  images.amoPack = love.graphics.newImage('assets/imgs/items/ammo-pack.png')
 
   fonts = {}
   fonts.large = love.graphics.newFont('assets/fonts/zorque.ttf', 32)
@@ -82,4 +86,5 @@ function love.draw()
     love.graphics.rectangle('fill', 0, 0, windowWidth, windowOffsetY)
     love.graphics.rectangle('fill', 0, windowHeight - windowOffsetY, windowWidth, windowOffsetY)
     love.graphics.setColor(255, 0, 0)
+
 end
