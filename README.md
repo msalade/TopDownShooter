@@ -10,8 +10,8 @@ Simple top down shooter game created with use of [LOVE 2D](https://love2d.org/) 
 |--|--|
 | 🡅 | go up |
 | 🡇 | go down |
-| 🡆 | go left |
-| 🡄 | go right |
+| 🡆 | go right |
+| 🡄 | go left |
 | SPACE | shoot |
 | ESC | puse |
  
